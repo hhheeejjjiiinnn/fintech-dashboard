@@ -87,9 +87,10 @@ with tab1:
     fig.update_layout(
         height=380, plot_bgcolor="#1a1f35", paper_bgcolor="#0f1117",
         font=dict(color="#a0aec0"), legend=dict(orientation="h", y=1.1),
-        xaxis=dict(gridcolor="#2d3748"), yaxis=dict(gridcolor="#2d3748", title="광고비 (억원)"),
-        yaxis2=dict(title="전환합계 (만건)", gridcolor="transparent")
+        xaxis=dict(gridcolor="#2d3748"),
+        yaxis=dict(gridcolor="#2d3748", title="광고비 (억원)"),
     )
+    fig.update_yaxes(title_text="전환합계 (만건)", secondary_y=True)
     st.plotly_chart(fig, use_container_width=True)
 
     col_a, col_b = st.columns(2)
