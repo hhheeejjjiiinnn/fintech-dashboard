@@ -188,28 +188,29 @@ with tab3:
     funnel_df["전환율"] = (funnel_df["수치"] / funnel_df["수치"].shift(1) * 100).round(1)
     funnel_df.loc[0, "전환율"] = 100.0
 
-    col1, col2 = st.columns([1.2, 1])
-    with col1:
-        fig7 = go.Figure(go.Funnel(
-            y=funnel_df["단계"],
-            x=funnel_df["수치"],
-            texttemplate="%{label}<br><b>%{value:,.0f}</b><br>%{percentPrevious:.1%}",
-            marker=dict(color=[
-                "#667eea","#7c6fe0","#9f7aea","#b794f4",
-                "#68d391","#4fd1c5","#f6e05e","#ed8936","#fc8181","#f687b3"
-            ]),
-            connector=dict(line=dict(color="#2d3748", width=1))
-        ))
-        fig7.update_layout(height=500, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
-            font=dict(color="#e2e8f0", size=12))
-        st.plotly_chart(fig7, use_container_width=True)
-    with col2:
-        st.markdown("#### 단계별 전환율 테이블")
-        display_df = funnel_df.copy()
-        display_df["수치(만)"] = (display_df["수치"]/1e4).round(1)
-        display_df["전환율(%)"] = display_df["전환율"].apply(lambda x: f"{x:.1f}%" if pd.notna(x) else "-")
-        st.dataframe(display_df[["단계","수치(만)","전환율(%)"]].rename(columns={"수치(만)":"수치(만건)"}),
-            use_container_width=True, hide_index=True, height=400)
+    fig7 = go.Figure(go.Funnel(
+        y=funnel_df["단계"],
+        x=funnel_df["수치"],
+        texttemplate="<b>%{value:,.0f}</b>  %{percentPrevious:.1%}",
+        textfont=dict(size=15),
+        textposition="inside",
+        marker=dict(color=[
+            "#667eea","#7c6fe0","#9f7aea","#b794f4",
+            "#68d391","#4fd1c5","#f6e05e","#ed8936","#fc8181","#f687b3"
+        ]),
+        connector=dict(line=dict(color="#2d3748", width=1))
+    ))
+    fig7.update_layout(height=550, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
+        font=dict(color="#e2e8f0", size=14),
+        margin=dict(l=120, r=40, t=20, b=20))
+    st.plotly_chart(fig7, use_container_width=True)
+
+    st.markdown("#### 단계별 전환율 테이블")
+    display_df = funnel_df.copy()
+    display_df["수치(만)"] = (display_df["수치"]/1e4).round(1)
+    display_df["전환율(%)"] = display_df["전환율"].apply(lambda x: f"{x:.1f}%" if pd.notna(x) else "-")
+    st.dataframe(display_df[["단계","수치(만)","전환율(%)"]].rename(columns={"수치(만)":"수치(만건)"}),
+        use_container_width=True, hide_index=True)
 
         st.markdown("#### 리타겟 vs 논타겟")
         ag = df.groupby("ad_group").agg(광고비=("광고비","sum"), 클릭=("광고클릭","sum"), 노출=("광고노출","sum")).reset_index()
