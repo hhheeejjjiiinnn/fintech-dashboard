@@ -188,21 +188,29 @@ with tab3:
     funnel_df["전환율"] = (funnel_df["수치"] / funnel_df["수치"].shift(1) * 100).round(1)
     funnel_df.loc[0, "전환율"] = 100.0
 
-    fig7 = go.Figure(go.Funnel(
-        y=funnel_df["단계"],
+    bar_colors = ["#667eea","#7c6fe0","#9f7aea","#b794f4",
+                  "#68d391","#4fd1c5","#f6e05e","#ed8936","#fc8181","#f687b3"]
+    funnel_df["전환율표시"] = funnel_df["전환율"].apply(lambda x: f"100%" if x==100 else f"▼ {x:.1f}%")
+    funnel_df["label"] = funnel_df.apply(
+        lambda r: f"{r['단계']}  {r['수치']:,.0f}건  ({r['전환율표시']})", axis=1)
+
+    fig7 = go.Figure(go.Bar(
         x=funnel_df["수치"],
-        texttemplate="<b>%{value:,.0f}</b>  %{percentPrevious:.1%}",
-        textfont=dict(size=15),
-        textposition="inside",
-        marker=dict(color=[
-            "#667eea","#7c6fe0","#9f7aea","#b794f4",
-            "#68d391","#4fd1c5","#f6e05e","#ed8936","#fc8181","#f687b3"
-        ]),
-        connector=dict(line=dict(color="#2d3748", width=1))
+        y=funnel_df["단계"],
+        orientation="h",
+        text=funnel_df["label"],
+        textposition="outside",
+        textfont=dict(size=13, color="#e2e8f0"),
+        marker=dict(color=bar_colors),
+        hovertemplate="<b>%{y}</b><br>수치: %{x:,.0f}건<extra></extra>",
     ))
-    fig7.update_layout(height=550, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
-        font=dict(color="#e2e8f0", size=14),
-        margin=dict(l=120, r=40, t=20, b=20))
+    fig7.update_layout(
+        height=500, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
+        font=dict(color="#e2e8f0", size=13),
+        xaxis=dict(type="log", title="건수 (로그 스케일)", gridcolor="#2d3748", tickformat=","),
+        yaxis=dict(autorange="reversed", gridcolor="rgba(0,0,0,0)", tickfont=dict(size=13)),
+        margin=dict(l=20, r=300, t=20, b=40)
+    )
     st.plotly_chart(fig7, use_container_width=True)
 
     st.markdown("#### 단계별 전환율 테이블")
