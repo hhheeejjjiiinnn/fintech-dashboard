@@ -212,15 +212,15 @@ with tab3:
     st.dataframe(display_df[["단계","수치(만)","전환율(%)"]].rename(columns={"수치(만)":"수치(만건)"}),
         use_container_width=True, hide_index=True)
 
-        st.markdown("#### 리타겟 vs 논타겟")
-        ag = df.groupby("ad_group").agg(광고비=("광고비","sum"), 클릭=("광고클릭","sum"), 노출=("광고노출","sum")).reset_index()
-        ag["CTR(%)"] = (ag["클릭"]/ag["노출"]*100).round(2)
-        fig8 = px.bar(ag, x="ad_group", y="CTR(%)", color="ad_group",
-            color_discrete_map={"논타겟":COLORS["논타겟"],"리타겟":COLORS["리타겟"]}, text="CTR(%)")
-        fig8.update_traces(texttemplate="%{text:.2f}%", textposition="outside")
-        fig8.update_layout(height=220, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
-            font=dict(color="#a0aec0"), showlegend=False, xaxis_title="", yaxis_title="CTR (%)")
-        st.plotly_chart(fig8, use_container_width=True)
+    st.markdown("#### 리타겟 vs 논타겟")
+    ag = df.groupby("ad_group").agg(광고비=("광고비","sum"), 클릭=("광고클릭","sum"), 노출=("광고노출","sum")).reset_index()
+    ag["CTR(%)"] = (ag["클릭"]/ag["노출"]*100).round(2)
+    fig8 = px.bar(ag, x="ad_group", y="CTR(%)", color="ad_group",
+        color_discrete_map={"논타겟":COLORS["논타겟"],"리타겟":COLORS["리타겟"]}, text="CTR(%)")
+    fig8.update_traces(texttemplate="%{text:.2f}%", textposition="outside")
+    fig8.update_layout(height=300, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
+        font=dict(color="#a0aec0"), showlegend=False, xaxis_title="", yaxis_title="CTR (%)")
+    st.plotly_chart(fig8, use_container_width=True)
 
 with tab4:
     st.markdown("#### 크리에이티브 포맷별 성과")
