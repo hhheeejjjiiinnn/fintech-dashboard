@@ -26,7 +26,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-EXCEL_PATH = "핀테크 데이터 분석_0425_vf.xlsx"
+EXCEL_PATH = "fintech_data.xlsx"
 COLORS = {
     "구글": "#4285f4", "네이버검색": "#03c75a", "페이스북": "#1877f2",
     "영상": "#667eea", "이미지": "#fc8181", "브랜드키워드": "#f6e05e", "일반키워드": "#68d391",
