@@ -256,12 +256,17 @@ with tab4:
         st.markdown("#### 포맷별 광고비 vs 노출 버블")
         fig10 = px.scatter(fmt, x="노출", y="CTR(%)", size="광고비", color="creative_format",
             color_discrete_map=COLORS, hover_name="creative_format",
-            text="creative_format", size_max=60)
-        fig10.update_traces(textposition="top center")
-        fig10.update_layout(height=320, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
-            font=dict(color="#a0aec0"), showlegend=False,
+            text="creative_format", size_max=50)
+        fig10.update_traces(
+            textposition="top center",
+            textfont=dict(size=13, color="#ffffff"),
+            marker=dict(opacity=0.85)
+        )
+        fig10.update_layout(height=380, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
+            font=dict(color="#e2e8f0"), showlegend=True,
+            legend=dict(orientation="h", y=-0.2, font=dict(size=12)),
             xaxis=dict(gridcolor="#2d3748", title="노출수"),
-            yaxis=dict(gridcolor="#2d3748", title="CTR (%)"))
+            yaxis=dict(gridcolor="#2d3748", title="CTR (%)", range=[-2, 18]))
         st.plotly_chart(fig10, use_container_width=True)
 
     st.markdown("#### 캠페인 목표별 비교")
@@ -334,10 +339,16 @@ with tab5:
     })
     fig12 = px.scatter(summary, x="CPA(원)", y="CTR(%)", size="광고비(억)",
         color="채널", color_discrete_map=COLORS, text="채널",
-        title="채널 포지셔닝 맵 (X=CPA, Y=CTR, 버블크기=광고비)",
+        title="채널 포지셔닝 맵 (X=CPA↓낮을수록 효율적, Y=CTR↑높을수록 좋음, 버블=광고비)",
         size_max=60)
-    fig12.update_traces(textposition="top center", textfont=dict(size=13))
-    fig12.update_layout(height=400, plot_bgcolor="#1a1f35", paper_bgcolor="#0f1117",
-        font=dict(color="#a0aec0"), title_font=dict(color="#e2e8f0"),
-        xaxis=dict(gridcolor="#2d3748"), yaxis=dict(gridcolor="#2d3748"))
+    fig12.update_traces(
+        textposition="top center",
+        textfont=dict(size=15, color="#ffffff"),
+        marker=dict(opacity=0.85)
+    )
+    fig12.update_layout(height=450, plot_bgcolor="#1a1f35", paper_bgcolor="#0f1117",
+        font=dict(color="#e2e8f0", size=13), title_font=dict(color="#e2e8f0", size=14),
+        xaxis=dict(gridcolor="#2d3748", range=[300, 2100]),
+        yaxis=dict(gridcolor="#2d3748", range=[-1, 14]),
+        legend=dict(font=dict(size=13)))
     st.plotly_chart(fig12, use_container_width=True)
