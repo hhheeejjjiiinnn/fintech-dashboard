@@ -342,13 +342,13 @@ with tab5:
         title="채널 포지셔닝 맵 (X=CPA↓낮을수록 효율적, Y=CTR↑높을수록 좋음, 버블=광고비)",
         size_max=60)
     fig12.update_traces(
-        textposition="top center",
-        textfont=dict(size=15, color="#ffffff"),
+        textposition="middle center",
+        textfont=dict(size=14, color="#ffffff"),
         marker=dict(opacity=0.85)
     )
-    fig12.update_layout(height=450, plot_bgcolor="#1a1f35", paper_bgcolor="#0f1117",
+    fig12.update_layout(height=500, plot_bgcolor="#1a1f35", paper_bgcolor="#0f1117",
         font=dict(color="#e2e8f0", size=13), title_font=dict(color="#e2e8f0", size=14),
         xaxis=dict(gridcolor="#2d3748", range=[300, 2100]),
-        yaxis=dict(gridcolor="#2d3748", range=[-1, 14]),
+        yaxis=dict(gridcolor="#2d3748", range=[-1, 16]),
         legend=dict(font=dict(size=13)))
     st.plotly_chart(fig12, use_container_width=True)
