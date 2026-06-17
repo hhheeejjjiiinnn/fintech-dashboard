@@ -145,39 +145,31 @@ with tab2:
             xaxis=dict(gridcolor="#2d3748"), yaxis=dict(gridcolor="rgba(0,0,0,0)"))
         st.plotly_chart(fig4, use_container_width=True)
     with c2:
-        st.markdown("#### 채널별 노출 vs 클릭 (단위: 백만)")
-        fig5 = go.Figure()
-        from plotly.subplots import make_subplots
-        fig5 = make_subplots(specs=[[{"secondary_y": True}]])
-        channels = ch["channel"].tolist()
-        for _, row in ch.iterrows():
-            ch_name = row["channel"]
-            color = COLORS.get(ch_name, "#888")
-            fig5.add_trace(go.Bar(
-                name=f"{ch_name} 노출", x=[ch_name],
-                y=[row["노출"]/1e8],
-                marker_color=color, opacity=0.85,
-                text=[f"{row['노출']/1e8:.1f}억"],
-                textposition="outside", textfont=dict(color="#e2e8f0"),
-            ), secondary_y=False)
-            fig5.add_trace(go.Bar(
-                name=f"{ch_name} 클릭", x=[ch_name],
-                y=[row["클릭"]/1e4],
-                marker_color=color, opacity=0.45,
-                text=[f"{row['클릭']/1e4:.0f}만"],
-                textposition="outside", textfont=dict(color="#e2e8f0"),
-            ), secondary_y=True)
-        fig5.update_layout(
-            height=340, barmode="group", plot_bgcolor="#1a1f35",
-            paper_bgcolor="#1a1f35", font=dict(color="#a0aec0"),
-            showlegend=True,
-            legend=dict(orientation="h", y=1.12, x=0.5, xanchor="center",
-                        font=dict(size=11)),
-            xaxis=dict(gridcolor="rgba(0,0,0,0)"),
-        )
-        fig5.update_yaxes(title_text="노출 (억)", gridcolor="#2d3748", secondary_y=False)
-        fig5.update_yaxes(title_text="클릭 (만)", gridcolor="rgba(0,0,0,0)", secondary_y=True)
-        st.plotly_chart(fig5, use_container_width=True)
+        st.markdown("#### 채널별 노출 (억)")
+        fig5a = px.bar(ch, x="channel", y=ch["노출"]/1e8,
+            color="channel", color_discrete_map=COLORS,
+            text=ch["노출"].apply(lambda v: f"{v/1e8:.1f}억"))
+        fig5a.update_traces(textposition="outside", textfont=dict(color="#e2e8f0"))
+        fig5a.update_layout(
+            height=260, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
+            font=dict(color="#a0aec0"), showlegend=False,
+            xaxis=dict(gridcolor="rgba(0,0,0,0)", title=""),
+            yaxis=dict(gridcolor="#2d3748", title="노출 (억)"),
+            margin=dict(t=20, b=10))
+        st.plotly_chart(fig5a, use_container_width=True)
+
+        st.markdown("#### 채널별 클릭 (만)")
+        fig5b = px.bar(ch, x="channel", y=ch["클릭"]/1e4,
+            color="channel", color_discrete_map=COLORS,
+            text=ch["클릭"].apply(lambda v: f"{v/1e4:.0f}만"))
+        fig5b.update_traces(textposition="outside", textfont=dict(color="#e2e8f0"))
+        fig5b.update_layout(
+            height=260, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
+            font=dict(color="#a0aec0"), showlegend=False,
+            xaxis=dict(gridcolor="rgba(0,0,0,0)", title=""),
+            yaxis=dict(gridcolor="#2d3748", title="클릭 (만)"),
+            margin=dict(t=20, b=10))
+        st.plotly_chart(fig5b, use_container_width=True)
 
     st.markdown("#### 채널별 월간 광고비 추이")
     monthly_ch = df.groupby(["year_month","channel"])["광고비"].sum().reset_index()
