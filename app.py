@@ -112,7 +112,7 @@ with tab1:
         fig3.update_traces(texttemplate="%{text:,.0f}원", textposition="outside")
         fig3.update_layout(height=300, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
             font=dict(color="#a0aec0"), showlegend=False,
-            xaxis=dict(gridcolor="#2d3748"), yaxis=dict(gridcolor="transparent"))
+            xaxis=dict(gridcolor="#2d3748"), yaxis=dict(gridcolor="rgba(0,0,0,0)"))
         st.plotly_chart(fig3, use_container_width=True)
 
 with tab2:
@@ -142,7 +142,7 @@ with tab2:
         fig4.update_traces(texttemplate="%{text:.2f}%", textposition="outside")
         fig4.update_layout(height=300, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
             font=dict(color="#a0aec0"), showlegend=False,
-            xaxis=dict(gridcolor="#2d3748"), yaxis=dict(gridcolor="transparent"))
+            xaxis=dict(gridcolor="#2d3748"), yaxis=dict(gridcolor="rgba(0,0,0,0)"))
         st.plotly_chart(fig4, use_container_width=True)
     with c2:
         st.markdown("#### 채널별 노출 vs 클릭 (단위: 백만)")
@@ -154,7 +154,7 @@ with tab2:
                 y=[row["클릭"]/1e6], marker_color=COLORS.get(row["channel"],"#888")))
         fig5.update_layout(height=300, barmode="group", plot_bgcolor="#1a1f35",
             paper_bgcolor="#1a1f35", font=dict(color="#a0aec0"), showlegend=False,
-            xaxis=dict(gridcolor="transparent"), yaxis=dict(gridcolor="#2d3748"))
+            xaxis=dict(gridcolor="rgba(0,0,0,0)"), yaxis=dict(gridcolor="#2d3748"))
         st.plotly_chart(fig5, use_container_width=True)
 
     st.markdown("#### 채널별 월간 광고비 추이")
