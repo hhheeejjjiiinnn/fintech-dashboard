@@ -271,7 +271,7 @@ with tab4:
                     size=max(row["광고비"] / 3e9 * 80, 20),
                     color=COLORS.get(fmt_name, "#888"),
                     opacity=0.85,
-                    line=dict(width=1, color="#ffffff40")
+                    line=dict(width=1, color="rgba(255,255,255,0.25)")
                 ),
                 hovertemplate=f"<b>{fmt_name}</b><br>노출: %{{x:,.0f}}<br>CTR: %{{y:.2f}}%<extra></extra>"
             ))
