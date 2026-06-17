@@ -254,19 +254,32 @@ with tab4:
         st.plotly_chart(fig9, use_container_width=True)
     with col_b:
         st.markdown("#### 포맷별 광고비 vs 노출 버블")
-        fig10 = px.scatter(fmt, x="노출", y="CTR(%)", size="광고비", color="creative_format",
-            color_discrete_map=COLORS, hover_name="creative_format",
-            text="creative_format", size_max=50)
-        fig10.update_traces(
-            textposition="top center",
-            textfont=dict(size=13, color="#ffffff"),
-            marker=dict(opacity=0.85)
-        )
+        # 텍스트 위치를 포맷별로 개별 지정
+        text_positions = {"브랜드키워드": "top right", "일반키워드": "bottom right",
+                          "영상": "top left", "이미지": "bottom left"}
+        fig10 = go.Figure()
+        for _, row in fmt.iterrows():
+            fmt_name = row["creative_format"]
+            fig10.add_trace(go.Scatter(
+                x=[row["노출"]], y=[row["CTR(%)"]],
+                mode="markers+text",
+                name=fmt_name,
+                text=[fmt_name],
+                textposition=text_positions.get(fmt_name, "top center"),
+                textfont=dict(size=13, color="#ffffff"),
+                marker=dict(
+                    size=max(row["광고비"] / 3e9 * 80, 20),
+                    color=COLORS.get(fmt_name, "#888"),
+                    opacity=0.85,
+                    line=dict(width=1, color="#ffffff40")
+                ),
+                hovertemplate=f"<b>{fmt_name}</b><br>노출: %{{x:,.0f}}<br>CTR: %{{y:.2f}}%<extra></extra>"
+            ))
         fig10.update_layout(height=380, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
-            font=dict(color="#e2e8f0"), showlegend=True,
-            legend=dict(orientation="h", y=-0.2, font=dict(size=12)),
+            font=dict(color="#e2e8f0"), showlegend=False,
             xaxis=dict(gridcolor="#2d3748", title="노출수"),
-            yaxis=dict(gridcolor="#2d3748", title="CTR (%)", range=[-2, 18]))
+            yaxis=dict(gridcolor="#2d3748", title="CTR (%)", range=[-1, 17]),
+            margin=dict(l=20, r=20, t=20, b=20))
         st.plotly_chart(fig10, use_container_width=True)
 
     st.markdown("#### 캠페인 목표별 비교")
