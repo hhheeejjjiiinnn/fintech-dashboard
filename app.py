@@ -37,7 +37,9 @@ COLORS = {
 @st.cache_data(show_spinner="데이터 로딩 중...")
 def load_data():
     df = pd.read_excel(EXCEL_PATH)
-    df["date"] = pd.to_datetime(df["date"], unit="D", origin="1899-12-30")
+    df["date"] = pd.to_datetime(df["date"].apply(
+        lambda x: pd.Timestamp("1899-12-30") + pd.Timedelta(days=int(x)) if pd.notna(x) else pd.NaT
+    ))
     df["month"] = df["date"].dt.to_period("M").astype(str)
     df["year_month"] = df["date"].dt.strftime("%Y-%m")
     df["CTR"] = df["광고클릭"] / df["광고노출"].replace(0, pd.NA) * 100
