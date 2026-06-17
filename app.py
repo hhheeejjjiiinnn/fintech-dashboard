@@ -204,26 +204,28 @@ with tab3:
 
     bar_colors = ["#667eea","#7c6fe0","#9f7aea","#b794f4",
                   "#68d391","#4fd1c5","#f6e05e","#ed8936","#fc8181","#f687b3"]
-    funnel_df["전환율표시"] = funnel_df["전환율"].apply(lambda x: f"100%" if x==100 else f"▼ {x:.1f}%")
-    funnel_df["label"] = funnel_df.apply(
-        lambda r: f"{r['단계']}  {r['수치']:,.0f}건  ({r['전환율표시']})", axis=1)
+    funnel_df["전환율표시"] = funnel_df["전환율"].apply(lambda x: "100%" if x==100 else f"▼{x:.1f}%")
+    funnel_df["inside_label"] = funnel_df.apply(
+        lambda r: f"{r['수치']/1e4:.0f}만건  {r['전환율표시']}", axis=1)
 
     fig7 = go.Figure(go.Bar(
         x=funnel_df["수치"],
         y=funnel_df["단계"],
         orientation="h",
-        text=funnel_df["label"],
-        textposition="outside",
-        textfont=dict(size=13, color="#e2e8f0"),
+        text=funnel_df["inside_label"],
+        textposition="inside",
+        insidetextanchor="start",
+        textfont=dict(size=12, color="#ffffff"),
         marker=dict(color=bar_colors),
-        hovertemplate="<b>%{y}</b><br>수치: %{x:,.0f}건<extra></extra>",
+        hovertemplate="<b>%{y}</b><br>%{x:,.0f}건<extra></extra>",
     ))
     fig7.update_layout(
-        height=500, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
-        font=dict(color="#e2e8f0", size=13),
-        xaxis=dict(type="log", title="건수 (로그 스케일)", gridcolor="#2d3748", tickformat=","),
-        yaxis=dict(autorange="reversed", gridcolor="rgba(0,0,0,0)", tickfont=dict(size=13)),
-        margin=dict(l=20, r=300, t=20, b=40)
+        height=480, plot_bgcolor="#1a1f35", paper_bgcolor="#1a1f35",
+        font=dict(color="#e2e8f0", size=12),
+        xaxis=dict(type="log", title="건수 (로그 스케일)", gridcolor="#2d3748"),
+        yaxis=dict(autorange="reversed", gridcolor="rgba(0,0,0,0)",
+                   tickfont=dict(size=12), automargin=True),
+        margin=dict(l=10, r=20, t=20, b=40)
     )
     st.plotly_chart(fig7, use_container_width=True)
 
