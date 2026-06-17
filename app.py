@@ -52,14 +52,10 @@ def load_data():
 df = load_data()
 
 st.markdown("""
-<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4px">
-    <div>
-        <div style="font-size:26px;font-weight:800;color:#e2e8f0;margin-bottom:4px">핀테크 마케팅 데이터 대시보드</div>
-        <div style="font-size:13px;color:#718096">데이터 기반 의사결정을 위한 마케팅 데이터 시각화 &nbsp;|&nbsp; 기말고사 과제 &nbsp;|&nbsp; 총 {:,}건 데이터</div>
-    </div>
-    <div style="text-align:right;color:#a0aec0;font-size:13px;line-height:1.7">
-        <div style="font-weight:700;color:#e2e8f0;font-size:15px">박희진</div>
-        <div>U2025071</div>
+<div style="margin-bottom:4px">
+    <div style="font-size:26px;font-weight:800;color:#e2e8f0;margin-bottom:6px">핀테크 마케팅 데이터 대시보드</div>
+    <div style="font-size:13px;color:#718096">
+        데이터 기반 의사결정을 위한 마케팅 데이터 시각화 &nbsp;|&nbsp; 기말고사 과제 &nbsp;|&nbsp; 총 {:,}건 데이터 &nbsp;|&nbsp; <span style="color:#a0aec0;font-weight:600">박희진 U2025071</span>
     </div>
 </div>
 """.format(len(df)), unsafe_allow_html=True)
