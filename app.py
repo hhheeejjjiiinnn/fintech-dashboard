@@ -311,7 +311,9 @@ with tab4:
         fig11.add_trace(go.Bar(name=row.campaign_objective, x=[row.campaign_objective],
             y=[row._9], marker_color=color, showlegend=True), row=1, col=2)
     fig11.update_layout(height=300, plot_bgcolor="#1a1f35", paper_bgcolor="#0f1117",
-        font=dict(color="#a0aec0"), legend=dict(orientation="h"))
+        font=dict(color="#a0aec0"),
+        legend=dict(orientation="h", y=-0.2, x=0.5, xanchor="center"))
+    fig11.update_xaxes(showticklabels=False)
     st.plotly_chart(fig11, use_container_width=True)
 
 with tab5:
